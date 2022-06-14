@@ -51,3 +51,21 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+function game() {
+  for (let i = 0; i < 5; i++) {
+    let playerSelection = prompt("What's your move?")
+    const computerSelection = computerPlay()
+    console.log(playRound(playerSelection, computerSelection))
+    if (i === 4) {
+      if (player > computer) {
+        console.log('You are the Winner')
+      } else if (computer > player) {
+        console.log('You are the loser, Computer Wins')
+      } else {
+        console.log("It's a Draw! Play again")
+      }
+    }
+  }
+}
+
+game()
