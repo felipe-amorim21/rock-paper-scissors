@@ -1,6 +1,39 @@
 let player = 0
 let computer = 0
 
+const body = document.querySelector('body')
+const scissors = document.createElement('button')
+const rock = document.createElement('button')
+const paper = document.createElement('button')
+const div = document.createElement('div')
+const score = document.createElement('div')
+const playerScore = document.createElement('div')
+const computerScore = document.createElement('div')
+
+scissors.style.cssText = 'padding: 15px 32px;'
+rock.style.cssText = 'padding: 15px 32px;'
+paper.style.cssText = 'padding: 15px 32px;'
+
+scissors.textContent = 'Scissors'
+rock.textContent = 'Rock'
+paper.textContent = 'Paper'
+
+div.style.cssText = 'width: 20vh; height: 5vh ; border: 5px solid red'
+score.style.cssText = 'width: 20vh; height: 5vh ; border: 5px solid blue'
+
+body.appendChild(rock)
+body.appendChild(paper)
+body.appendChild(scissors)
+body.appendChild(div)
+body.appendChild(score)
+body.appendChild(playerScore)
+body.appendChild(computerScore)
+
+playerScore.textContent = 'Player ' + player
+computerScore.textContent = 'Computer ' + computer
+
+const buttons = document.querySelectorAll('button')
+
 function computerPlay() {
   let randomNumber = Math.floor(Math.random() * 3)
   let computerPick = ''
@@ -51,21 +84,32 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("What's your move?")
-    const computerSelection = computerPlay()
-    console.log(playRound(playerSelection, computerSelection))
-    if (i === 4) {
-      if (player > computer) {
-        console.log('You are the Winner')
-      } else if (computer > player) {
-        console.log('You are the loser, Computer Wins')
-      } else {
-        console.log("It's a Draw! Play again")
-      }
-    }
+function endGame() {
+  if (player >= 5 && computer < 5) {
+    score.textContent = 'Game Over. You Win!'
+    div.textContent = ''
+    removeButton()
+  } else if (player < 5 && computer >= 5) {
+    score.textContent = 'Game Over. You Lose!'
+    div.textContent = ''
+    removeButton()
   }
 }
 
+function removeButton() {
+  buttons.forEach(btn => (btn.disabled = true))
+}
+
+function getPlayerSelection(e) {
+  div.textContent = playRound(e.target.textContent, computerPlay())
+  playerScore.textContent = 'Player ' + player
+  computerScore.textContent = 'Computer ' + computer
+  endGame()
+}
+
+function game() {
+  scissors.addEventListener('click', e => getPlayerSelection(e))
+  rock.addEventListener('click', e => getPlayerSelection(e))
+  paper.addEventListener('click', e => getPlayerSelection(e))
+}
 game()
