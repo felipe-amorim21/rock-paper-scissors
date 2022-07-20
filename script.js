@@ -97,7 +97,7 @@ function endGame() {
 }
 
 function removeButton() {
-  buttons.forEach(btn => (btn.disabled = true))
+  buttons.forEach(btn => btn.removeEventListener('click', getPlayerSelection))
 }
 
 function getPlayerSelection(e) {
@@ -108,8 +108,8 @@ function getPlayerSelection(e) {
 }
 
 function game() {
-  scissors.addEventListener('click', e => getPlayerSelection(e))
-  rock.addEventListener('click', e => getPlayerSelection(e))
-  paper.addEventListener('click', e => getPlayerSelection(e))
+  scissors.addEventListener('click', getPlayerSelection)
+  rock.addEventListener('click', getPlayerSelection)
+  paper.addEventListener('click', getPlayerSelection)
 }
 game()
